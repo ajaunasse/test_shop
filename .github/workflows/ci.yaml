@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   php-cs-fixer:
-    name: PHP-CS-Fixer
+    name: php-cs-fixer
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,6 +14,7 @@ jobs:
           args: --config=.php-cs-fixer.dist.php --diff --dry-run
 
   php-stan:
+    name: php-stan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,9 +23,9 @@ jobs:
         with:
           configuration: phpstan.neon
 
-  build-test:
+  phpunit:
+    name: phpunit
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
 
