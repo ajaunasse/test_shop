@@ -1,4 +1,4 @@
-# Test sop
+# Test shop
 ***
 Test shop with DI container injection and some symfony compoments
 * php DI
