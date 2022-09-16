@@ -6,6 +6,7 @@ namespace App\Domain\Product;
 
 interface CommentRepositoryInterface
 {
+    /** @return Comment[] */
     public function findAllByProduct(int $productId): array;
 
     public function save(Comment $comment): void;

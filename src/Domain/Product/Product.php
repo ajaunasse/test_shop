@@ -18,6 +18,7 @@ final class Product
     ) {
     }
 
+    /** @param array<string, mixed> $data */
     public static function fromApiData(array $data): self
     {
         return new self(

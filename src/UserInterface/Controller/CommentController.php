@@ -22,9 +22,9 @@ final class CommentController
 
     public function post(int $productId): Response
     {
-        $comment = $this->request->request->get('content');
+        $content = (string) $this->request->request->get('content');
 
-        $comment = Comment::createFromContentAndProductId($comment, $productId);
+        $comment = Comment::createFromContentAndProductId($content, $productId);
 
         $this->commentRepository->save($comment);
 

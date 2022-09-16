@@ -22,12 +22,13 @@ final class Comment
         );
     }
 
+    /** @param array<string, string|int> $data */
     public static function createFromArray(array $data): self
     {
         return new self(
-            uuid: $data['commentId'],
-            productId: $data['productId'],
-            content: trim($data['content']),
+            uuid: (string) $data['commentId'],
+            productId: (int) $data['productId'],
+            content: trim((string) $data['content']),
         );
     }
 
