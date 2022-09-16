@@ -19,4 +19,14 @@ $ composer install
 $ php -S localhost:8000
 ```
 
+Run tests 
+```
+$ vendor/bin/phpunit
+```
+
+Run cs-fixer
+```
+$ vendor/bin/phpunit fix
+```
+
 No databases needed for this project

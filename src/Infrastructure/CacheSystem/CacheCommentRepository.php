@@ -31,12 +31,12 @@ final class CacheCommentRepository implements CommentRepositoryInterface
 
         return array_map(
             function ($value, $key) use ($productId) {
-            return Comment::createFromArray([
-                'commentId' => $key,
-                'content' => $value,
-                'productId' => $productId,
-            ]);
-        },
+                return Comment::createFromArray([
+                    'commentId' => $key,
+                    'content' => $value,
+                    'productId' => $productId,
+                ]);
+            },
             $comments,
             array_keys($comments),
         );
