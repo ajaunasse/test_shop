@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <h2>Product list</h2>
+    {% for product in products %}
+        <div class="col-6">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="card-header">
+                    {{ product.title }}
+                    <span class="float-end">
+                        <b>{{ product.price }} €</b>
+                    </span>
+                </div>
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ product.imageUrl }}" class="img-fluid rounded-start"  alt=" {{ product.title }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+
+                            <small><b>Category : {{ product.category }} </b></small><hr>
+                            <small>{{ product.description }}</small>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted"> {{ product.rate }} / 5 ( {{ product.reviewCount }} reviews )</small>
+                    <a href="{{ router.generate('product_detail', {'id' : product.id}) }}" class="btn btn-primary float-end">Product detail</a>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+{% endblock %}

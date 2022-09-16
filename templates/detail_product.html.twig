@@ -1,0 +1,103 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+    <div class="col-8 text-center">
+        <h2>Product n° {{ product.id }}</h2>
+        <div class="card mb-3">
+            <div class="card-header">
+                {{ product.title }}
+            </div>
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ product.imageUrl }}" class="img-fluid rounded-start"  alt=" {{ product.title }}">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+
+                        <small><b>Category : {{ product.category }}</b></small><hr>
+                        <small>{{ product.description }}</small>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted float-start"> {{ product.rate }} / 5 ( {{ product.reviewCount }} reviews )</small>
+                <small class="text-muted float-end">{{ product.price }} €</small>
+             </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <h2> Comments </h2> <hr>
+        {% for comment in comments %}
+            <div class="float-end">
+                <a href="{{ router.generate('delete_comment', {'productId' : product.id, 'commentId' : comment.id }) }}"
+                   class="btn btn-outline-danger btn-sm"> Delete
+                </a>
+                <button
+                        class="btn btn-outline-primary btn-sm edit-comment"
+                        data-comment-id="{{ comment.id }}"
+                        > Edit
+                </button>
+            </div>
+            <br><br>
+            <form method="POST" action="{{ router.generate('edit_comment', {'commentId': comment.id, 'productId' : product.id }) }}">
+                <textarea name="content" class="form-control" id="textarea_{{ comment.id }}" disabled>{{ comment.content }}</textarea>
+                <br>
+                <div class="form-action" id="form_action_{{ comment.id }}" style="display: none">
+                    <input type="submit" class="btn btn-success float-end btn-sm" id="submit_{{ comment.id}}" value="save" >
+                    <button class="btn btn-danger float-end btn-sm cancel-edit" data-comment-id="{{ comment.id }}"> Cancel </button>
+                </div>
+            </form>
+            <br>
+            <hr>
+        {% else %}
+            <div class="alert alert-info"> No comments yet </div>
+        {% endfor %}
+        <br>
+        <form method="POST" action="{{ router.generate('add_comment', {'productId' : product.id }) }}">
+            <div class="form-floating">
+                <textarea class="form-control" name="content" placeholder="Leave a comment here" id="comment"></textarea>
+                <label for="content">Leave your comment here</label>
+            </div>
+            <br>
+            <input type="submit" class="btn btn-success float-end btn-sm" value="Comment">
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    <script type="application/javascript">
+
+        Array.from(document.getElementsByClassName('edit-comment')).forEach((button) => {
+            button.addEventListener('click', (e)=>{
+                e.preventDefault();
+                enableTextarea(e.target.getAttribute('data-comment-id'))
+            })
+        });
+
+        Array.from(document.getElementsByClassName('cancel-edit')).forEach((button) => {
+            button.addEventListener('click', (e)=>{
+                e.preventDefault();
+                disableTextarea(e.target.getAttribute('data-comment-id'))
+            })
+        });
+
+        function enableTextarea(commentId) {
+            let textarea = document.getElementById('textarea_'+commentId)
+            let formActionButton = document.getElementById('form_action_'+commentId)
+
+            textarea.disabled = false;
+            formActionButton.style.display = "block";
+        }
+
+        function disableTextarea(commentId)  {
+            let textarea = document.getElementById('textarea_'+commentId)
+            let formActionButton = document.getElementById('form_action_'+commentId)
+            textarea.disabled = true;
+            formActionButton.style.display = "none";
+        }
+    </script>
+{% endblock %}
